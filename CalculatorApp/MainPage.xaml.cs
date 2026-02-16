@@ -1,4 +1,6 @@
-﻿namespace CalculatorApp
+﻿using System.Security.AccessControl;
+
+namespace CalculatorApp
 {
     public partial class MainPage : ContentPage
     {
@@ -23,6 +25,18 @@
         public MainPage()
         {
             InitializeComponent();
+
+            Button toCommonPageBtn = new Button
+            {
+                Text = "Common",
+                HorizontalOptions = LayoutOptions.Start
+            };
+            toCommonPageBtn.Clicked += ToEngineeringCalculator;
+        }
+
+        private async void ToEngineeringCalculator(object? sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new EngineeringCalculator());
         }
 
         private void OnBtnNumClicked(object sender, System.EventArgs e)

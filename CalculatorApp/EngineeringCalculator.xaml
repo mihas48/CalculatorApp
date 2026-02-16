@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CalculatorApp.MainPage">
-
-    <!--150 на 270 -->
+             x:Class="CalculatorApp.EngineeringCalculator"
+             Title="EngineeringCalculator">
+    
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
-                <Button Text="Engineering" Clicked="ToEngineeringCalculator"/>
+                <Button Text="← Back" Clicked="OnBackClicked" HorizontalOptions="Start" Margin="10"/>
             </Border>
 
             <Border Stroke="Gray" Margin="20" Grid.Row="1">
@@ -24,12 +24,12 @@
                     <RoundRectangle CornerRadius="25"/>
                 </Border.StrokeShape>
                 <Label Text="0" FontSize="60" MaxLines ="1" HorizontalTextAlignment="End"
-                        Padding="20, 10" x:Name="resLabel"/>
+                    Padding="20, 10" x:Name="resLabel"/>
             </Border>
 
 
             <!--При изменении размера окна по вертикали, увеличивается только первая кнопка,
-            хотя при изменении размера по горизонтали или диагонали всё работает нормально-->
+        хотя при изменении размера по горизонтали или диагонали всё работает нормально-->
             <Grid Margin="20" Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -221,5 +221,4 @@
             </Grid>
         </Grid>
     </ScrollView>
-
 </ContentPage>

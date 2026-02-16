@@ -11,7 +11,7 @@ namespace CalculatorApp
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell())
+            return new Window(new NavigationPage(new MainPage()))
             {
                 Width = 500,
                 Height = 700,
