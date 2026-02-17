@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CalculatorApp.EngineeringCalculator"
-             Title="EngineeringCalculator">
-    
+             Title="Engineering Calculator">
+
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -12,26 +12,27 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Grid.Column="0">
+            <!-- Кнопка назад -->
+            <Border Grid.Row="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
                 <Button Text="← Back" Clicked="OnBackClicked" HorizontalOptions="Start" Margin="10"/>
             </Border>
 
+            <!-- Дисплей результата -->
             <Border Stroke="Gray" Margin="20" Grid.Row="1">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="25"/>
                 </Border.StrokeShape>
-                <Label Text="0" FontSize="60" MaxLines ="1" HorizontalTextAlignment="End"
-                    Padding="20, 10" x:Name="resLabel"/>
+                <Label Text="0" FontSize="60" MaxLines="1" HorizontalTextAlignment="End"
+                       Padding="20, 10" x:Name="resLabel"/>
             </Border>
 
-
-            <!--При изменении размера окна по вертикали, увеличивается только первая кнопка,
-        хотя при изменении размера по горизонтали или диагонали всё работает нормально-->
+            <!-- Клавиатура калькулятора -->
             <Grid Margin="20" Grid.Row="2">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -44,180 +45,270 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Grid.Column="0" >
+                <!-- ========== РЯД 0: Инженерные функции ========== -->
+
+                <Border Grid.Row="0" Grid.Column="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="%" Clicked="OnBtnPercentageClicked"/>
+                    <!--<Button Text="(" Clicked="OnBtnBracketClicked"/>-->
+                    
                 </Border>
 
-                <Border Grid.Row="0" Grid.Column="1" >
+                <Border Grid.Row="0" Grid.Column="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="CE" Clicked="OnBtnClearEntryClicked"/>
+                    <!-- <Button Text=")" <Clicked="OnBtnBracketClicked"/>-->
+                    
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="C" Clicked="OnBtnClearClicked"/>
+                    <Button Text="%" Clicked="OnBtnPercentageClicked"/>
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="3">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
+                    <Button Text="CE" Clicked="OnBtnClearEntryClicked"/>
+                </Border>
+
+                <Border Grid.Row="0" Grid.Column="4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="C" Clicked="OnBtnClearClicked"/>
+                </Border>
+
+                <!-- ========== РЯД 1: Доп функции ========== -->
+
+                <Border Grid.Row="1" Grid.Column="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="π" Clicked="OnBtnConstantClicked"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="e" Clicked="OnBtnConstantClicked"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="x²" Clicked="OnBtnSimpleOperationClicked"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="3">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="√x" Clicked="OnBtnSimpleOperationClicked"/>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
                     <Button Text="DEL" Clicked="OnBtnDelClicked"/>
                 </Border>
 
-                <Border Grid.Row="1" Grid.Column="0">
+                <!-- ========== РЯД 2: Функции ========== -->
+
+                <Border Grid.Row="2" Grid.Column="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="sin" Clicked="OnBtnTrigClicked"/>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="cos" Clicked="OnBtnTrigClicked"/>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="tan" Clicked="OnBtnTrigClicked"/>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="3">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="1/x" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
-
-                <Border Grid.Row="1" Grid.Column="1" >
+                <Border Grid.Row="2" Grid.Column="4">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="x^2" Clicked="OnBtnSimpleOperationClicked"/>
+                    <Button Text="÷" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
+                <!-- ========== РЯД 3: Цифры 7-8-9 ========== -->
 
-                <Border Grid.Row="1" Grid.Column="2" >
+                <Border Grid.Row="3" Grid.Column="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="2_/x" Clicked="OnBtnSimpleOperationClicked"/>
+                    <Button Text="ln" Clicked="OnBtnTrigClicked"/>
                 </Border>
 
-
-                <Border Grid.Row="1" Grid.Column="3" >
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="15"/>
-                    </Border.StrokeShape>
-                    <Button Text="/" Clicked="OnBtnComplexOperationClicked"/>
-                </Border>
-
-                <Border Grid.Row="2" Grid.Column="0" >
+                <Border Grid.Row="3" Grid.Column="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="7" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-
-                <Border Grid.Row="2" Grid.Column="1" >
+                <Border Grid.Row="3" Grid.Column="2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="8" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-
-                <Border Grid.Row="2" Grid.Column="2" >
+                <Border Grid.Row="3" Grid.Column="3">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="9" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="2" Grid.Column="3" >
+                <Border Grid.Row="3" Grid.Column="4">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="*" Clicked="OnBtnComplexOperationClicked"/>
+                    <Button Text="×" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
-                <Border Grid.Row="3" Grid.Column="0" >
+                <!-- ========== РЯД 4: Цифры 4-5-6 ========== -->
+
+                <Border Grid.Row="4" Grid.Column="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="log" Clicked="OnBtnTrigClicked"/>
+                </Border>
+
+                <Border Grid.Row="4" Grid.Column="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="4" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="3" Grid.Column="1" >
+                <Border Grid.Row="4" Grid.Column="2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="5" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="3" Grid.Column="2" >
+                <Border Grid.Row="4" Grid.Column="3">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="6" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="3" Grid.Column="3" >
+                <Border Grid.Row="4" Grid.Column="4">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="-" Clicked="OnBtnComplexOperationClicked"/>
+                    <Button Text="−" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
-                <Border Grid.Row="4" Grid.Column="0" >
+                <!-- ========== РЯД 5: Цифры 1-2-3 ========== -->
+
+                <Border Grid.Row="5" Grid.Column="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="x^y" Clicked="OnBtnComplexOperationClicked"/>
+                </Border>
+
+                <Border Grid.Row="5" Grid.Column="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="1" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="4" Grid.Column="1" >
+                <Border Grid.Row="5" Grid.Column="2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="2" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="4" Grid.Column="2" >
+                <Border Grid.Row="5" Grid.Column="3">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="3" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="4" Grid.Column="3" >
+                <Border Grid.Row="5" Grid.Column="4">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="+" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
-                <Border Grid.Row="5" Grid.Column="0" >
+                <!-- ========== РЯД 6: Нижний ряд ========== -->
+
+                <Border Grid.Row="6" Grid.Column="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="+/-" Clicked="OnBtnSimpleOperationClicked"/>
+                    <Button Text="n!" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
-                <Border Grid.Row="5" Grid.Column="1" >
+                <Border Grid.Row="6" Grid.Column="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Button Text="+/−" Clicked="OnBtnSimpleOperationClicked"/>
+                </Border>
+
+                <Border Grid.Row="6" Grid.Column="2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="0" Clicked="OnBtnNumClicked"/>
                 </Border>
 
-                <Border Grid.Row="5" Grid.Column="2" >
+                <Border Grid.Row="6" Grid.Column="3">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="," Clicked="OnBtnPointClicked"/>
                 </Border>
 
-                <Border Grid.Row="5" Grid.Column="3" >
+                <Border Grid.Row="6" Grid.Column="4">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
                     <Button Text="=" Clicked="OnBtnEqualsClicked"/>
                 </Border>
+
             </Grid>
         </Grid>
     </ScrollView>
