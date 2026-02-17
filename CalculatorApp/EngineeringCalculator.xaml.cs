@@ -2,9 +2,9 @@ namespace CalculatorApp;
 
 public partial class EngineeringCalculator : ContentPage
 {
-	public EngineeringCalculator()
-	{
-		InitializeComponent();
+    public EngineeringCalculator()
+    {
+        InitializeComponent();
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
@@ -25,16 +25,18 @@ public partial class EngineeringCalculator : ContentPage
         power,
         none
     }
-    
+
     Operation operation = Operation.none;
-   
+
     double leftOperand = double.MinValue;
 
     private void OnBtnNumClicked(object sender, System.EventArgs e)
     {
+        double num;
+
         Button currentBtn = (Button)sender;
 
-        if (resLabel.Text == "0")
+        if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
             resLabel.Text = "";
         resLabel.Text += currentBtn.Text;
     }
@@ -82,11 +84,12 @@ public partial class EngineeringCalculator : ContentPage
             "-" => Operation.subtrarion,
             "×" => Operation.multiplication,
             "÷" => Operation.division,
-            "x^y" => Operation.power
+            "x^y" => Operation.power,
+            _ => Operation.none
         };
 
-        if (resLabel.Text != "0")
-            leftOperand = double.Parse(resLabel.Text);
+        if (resLabel.Text != "0" && resLabel.Text != "0,")
+            double.TryParse(resLabel.Text, out leftOperand);
 
         OnBtnClearEntryClicked(sender, e);
     }
@@ -96,75 +99,95 @@ public partial class EngineeringCalculator : ContentPage
         static double Factorial(double num)
         {
             if (num == 0 || num == 1) return num;
-
             return num * Factorial(num - 1);
         }
+
+        double operand;
+        double.TryParse(resLabel.Text, out operand);
 
         Button currentBtn = (Button)sender;
 
         switch (currentBtn.Text)
         {
             case "√x":
-                resLabel.Text = Math.Sqrt(double.Parse(resLabel.Text)).ToString();
+                if (operand < 0)
+                    resLabel.Text = "Ошибка! Невозможно извлечь корень из отрицательного числа!";
+                else
+                    resLabel.Text = Math.Sqrt(operand).ToString();
                 break;
             case "1/x":
-                resLabel.Text = (double.Parse(resLabel.Text) / 100).ToString();
+                if (resLabel.Text == "0" || resLabel.Text == "0,")
+                    resLabel.Text = "Ошибка! Деление на ноль невозможно!";
+                else
+                    resLabel.Text = (1.0 / operand).ToString();
                 break;
             case "+/-":
-                if (resLabel.Text[0] != '-' && resLabel.Text != "0")
+                if (resLabel.Text[0] != '-' && (resLabel.Text != "0" && resLabel.Text != "0,"))
                     resLabel.Text = '-' + resLabel.Text;
-                else
+                else if (resLabel.Text != "0" && resLabel.Text != "0,")
                     resLabel.Text = resLabel.Text.Substring(1);
                 break;
             case "x²":
-                resLabel.Text = Math.Pow(double.Parse(resLabel.Text), 2).ToString();
+                resLabel.Text = Math.Pow(operand, 2).ToString();
                 break;
             case "n!":
-                resLabel.Text = Factorial(double.Parse(resLabel.Text)).ToString();
+                if (operand < 0)
+                    resLabel.Text = "Ошибка! Невозможно найти факториал от отрицательного числа!";
+                else if (operand > 1000)
+                    resLabel.Text = "Ошибка! Переполнение";
+                else if (operand % 1 != 0)
+                    resLabel.Text = "Ошибка! Невозможно найти факториал от дробного числа!";
+                else
+                    resLabel.Text = Factorial(operand).ToString();
+                break;
+            case "x³":
+                resLabel.Text = Math.Pow(operand, 3).ToString();
+                break;
+            case "10ⁿ":
+                resLabel.Text = Math.Pow(10, operand).ToString();
                 break;
         }
     }
 
     private void OnBtnEqualsClicked(object sender, System.EventArgs e)
     {
+        double operand;
+        double.TryParse(resLabel.Text, out operand);
+
         switch (operation)
         {
             case Operation.addition:
-                resLabel.Text = (leftOperand + double.Parse(resLabel.Text)).ToString();
-                leftOperand = double.Parse(resLabel.Text);
+                resLabel.Text = (leftOperand + operand).ToString();
+                double.TryParse(resLabel.Text, out leftOperand);
                 operation = Operation.none;
                 break;
             case Operation.subtrarion:
-                resLabel.Text = (leftOperand - double.Parse(resLabel.Text)).ToString();
-                leftOperand = double.Parse(resLabel.Text);
+                resLabel.Text = (leftOperand - operand).ToString();
+                double.TryParse(resLabel.Text, out leftOperand);
                 operation = Operation.none;
                 break;
             case Operation.multiplication:
-                resLabel.Text = (leftOperand * double.Parse(resLabel.Text)).ToString();
-                leftOperand = double.Parse(resLabel.Text);
+                resLabel.Text = (leftOperand * operand).ToString();
+                double.TryParse(resLabel.Text, out leftOperand);
                 operation = Operation.none;
                 break;
             case Operation.division:
-                if (double.Parse(resLabel.Text) == 0)
+                if (operand == 0)
                 {
-                    resLabel.Text = "0";
+                    resLabel.Text = "Ошибка! Деление на ноль невозможно!";
                 }
-
                 else
                 {
-                    resLabel.Text = (leftOperand / double.Parse(resLabel.Text)).ToString();
-                    leftOperand = double.Parse(resLabel.Text);
+                    resLabel.Text = (leftOperand / operand).ToString();
+                    double.TryParse(resLabel.Text, out leftOperand);
                     operation = Operation.none;
                 }
-
                 break;
             case Operation.power:
-                resLabel.Text = Math.Pow(leftOperand, double.Parse(resLabel.Text)).ToString();
-                leftOperand = double.Parse(resLabel.Text);
+                resLabel.Text = Math.Pow(leftOperand, operand).ToString();
+                double.TryParse(resLabel.Text, out leftOperand);
                 operation = Operation.none;
-
                 break;
-
             case Operation.none:
                 break;
         }
@@ -176,22 +199,24 @@ public partial class EngineeringCalculator : ContentPage
         {
             resLabel.Text = "0";
         }
-
         else
         {
+            double operand;
+            double.TryParse(resLabel.Text, out operand);
+
             switch (operation)
             {
                 case Operation.addition:
-                    resLabel.Text = (leftOperand + (leftOperand * double.Parse(resLabel.Text) / 100)).ToString();
+                    resLabel.Text = (leftOperand + (leftOperand * operand / 100)).ToString();
                     break;
                 case Operation.subtrarion:
-                    resLabel.Text = (leftOperand - (leftOperand * double.Parse(resLabel.Text) / 100)).ToString();
+                    resLabel.Text = (leftOperand - (leftOperand * operand / 100)).ToString();
                     break;
                 case Operation.multiplication:
-                    resLabel.Text = (leftOperand * double.Parse(resLabel.Text) / 100).ToString();
+                    resLabel.Text = (leftOperand * operand / 100).ToString();
                     break;
                 case Operation.division:
-                    resLabel.Text = (leftOperand / double.Parse(resLabel.Text) * 100).ToString();
+                    resLabel.Text = (leftOperand / operand * 100).ToString();
                     break;
                 default:
                     resLabel.Text = "0";
@@ -222,24 +247,36 @@ public partial class EngineeringCalculator : ContentPage
             return degrees * (Math.PI / 180);
         }
 
+        double operand;
+        double.TryParse(resLabel.Text, out operand);
+
         Button CurrentBtn = (Button)sender;
 
         switch (CurrentBtn.Text)
         {
             case "sin":
-                resLabel.Text = Math.Sin(DegreesToRadians(double.Parse(resLabel.Text))).ToString();
+                resLabel.Text = Math.Sin(DegreesToRadians(operand)).ToString();
                 break;
             case "cos":
-                resLabel.Text = Math.Cos(DegreesToRadians(double.Parse(resLabel.Text))).ToString();
+                resLabel.Text = Math.Cos(DegreesToRadians(operand)).ToString();
                 break;
             case "tan":
-                resLabel.Text = Math.Tan(DegreesToRadians(double.Parse(resLabel.Text))).ToString();
+                if (operand == 90)
+                    resLabel.Text = "Ошибка! Невозможно найти тангенс от 90 градусов";
+                else
+                    resLabel.Text = Math.Tan(DegreesToRadians(operand)).ToString();
                 break;
             case "ln":
-                resLabel.Text = Math.Log(DegreesToRadians(double.Parse(resLabel.Text))).ToString();
+                if (operand <= 0)
+                    resLabel.Text = "Ошибка! Невозможно найти логарифм от этого числа!";
+                else
+                    resLabel.Text = Math.Log(operand).ToString();  
                 break;
             case "log":
-                resLabel.Text = Math.Log10(DegreesToRadians(double.Parse(resLabel.Text))).ToString();
+                if (operand <= 0)
+                    resLabel.Text = "Ошибка! Невозможно найти логарифм от этого числа!";
+                else
+                    resLabel.Text = Math.Log10(operand).ToString();  
                 break;
         }
     }

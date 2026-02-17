@@ -2,8 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CalculatorApp.MainPage">
-
-    <!--150 на 270 -->
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -12,13 +10,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Grid.Column="0">
+            
+            <!-- Кнопка переключения режима -->
+            <Border Grid.Row="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
                 <Button Text="Engineering" Clicked="ToEngineeringCalculator"/>
             </Border>
 
+            <!-- Дисплей результата -->
             <Border Stroke="Gray" Margin="20" Grid.Row="1">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="25"/>
@@ -28,8 +29,6 @@
             </Border>
 
 
-            <!--При изменении размера окна по вертикали, увеличивается только первая кнопка,
-            хотя при изменении размера по горизонтали или диагонали всё работает нормально-->
             <Grid Margin="20" Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -46,6 +45,8 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
+                <!--====== РЯД 0 =======-->
+                
                 <Border Grid.Row="0" Grid.Column="0" >
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
@@ -74,6 +75,8 @@
                     <Button Text="DEL" Clicked="OnBtnDelClicked"/>
                 </Border>
 
+                <!--====== РЯД 1 =======-->
+                
                 <Border Grid.Row="1" Grid.Column="0">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
@@ -86,7 +89,7 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="x^2" Clicked="OnBtnSimpleOperationClicked"/>
+                    <Button Text="x²" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
 
@@ -94,7 +97,7 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="2_/x" Clicked="OnBtnSimpleOperationClicked"/>
+                    <Button Text="√x" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
 
@@ -102,9 +105,11 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="/" Clicked="OnBtnComplexOperationClicked"/>
+                    <Button Text="÷" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
+                <!--====== РЯД 3 =======-->
+                
                 <Border Grid.Row="2" Grid.Column="0" >
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
@@ -132,9 +137,11 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="*" Clicked="OnBtnComplexOperationClicked"/>
+                    <Button Text="×" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
+                <!--====== РЯД 4 =======-->
+                
                 <Border Grid.Row="3" Grid.Column="0" >
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
@@ -162,6 +169,8 @@
                     </Border.StrokeShape>
                     <Button Text="-" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
+
+                <!--====== РЯД 5 =======-->
 
                 <Border Grid.Row="4" Grid.Column="0" >
                     <Border.StrokeShape>
@@ -191,6 +200,8 @@
                     <Button Text="+" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
+                <!--====== РЯД 6 =======-->
+                
                 <Border Grid.Row="5" Grid.Column="0" >
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>

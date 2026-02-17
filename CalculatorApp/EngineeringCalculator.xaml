@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CalculatorApp.EngineeringCalculator"
-             Title="Engineering Calculator">
+             x:Class="CalculatorApp.EngineeringCalculator">
 
     <ScrollView>
         <Grid>
@@ -17,7 +16,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
-                <Button Text="← Back" Clicked="OnBackClicked" HorizontalOptions="Start" Margin="10"/>
+                <Button Text="← Back" Clicked="OnBackClicked"/>
             </Border>
 
             <!-- Дисплей результата -->
@@ -54,23 +53,21 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <!--<Button Text="(" Clicked="OnBtnBracketClicked"/>-->
-                    
+                    <Button Text="%" Clicked="OnBtnPercentageClicked"/>
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <!-- <Button Text=")" <Clicked="OnBtnBracketClicked"/>-->
-                    
+                    <Button Text="10ⁿ" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="%" Clicked="OnBtnPercentageClicked"/>
+                    <Button Text="x³" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="3">
@@ -232,7 +229,7 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="−" Clicked="OnBtnComplexOperationClicked"/>
+                    <Button Text="-" Clicked="OnBtnComplexOperationClicked"/>
                 </Border>
 
                 <!-- ========== РЯД 5: Цифры 1-2-3 ========== -->
@@ -285,7 +282,7 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <Button Text="+/−" Clicked="OnBtnSimpleOperationClicked"/>
+                    <Button Text="+/-" Clicked="OnBtnSimpleOperationClicked"/>
                 </Border>
 
                 <Border Grid.Row="6" Grid.Column="2">
