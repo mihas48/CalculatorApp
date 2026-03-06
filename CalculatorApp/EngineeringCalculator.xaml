@@ -11,22 +11,24 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Кнопка назад -->
-            <Border Grid.Row="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="15"/>
-                </Border.StrokeShape>
-                <Button Text="← Back" Clicked="OnBackClicked"/>
-            </Border>
 
             <!-- Дисплей результата -->
-            <Border Stroke="Gray" Margin="20" Grid.Row="1">
+            <Border Stroke="Gray" Margin="20" Grid.Row="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="25"/>
                 </Border.StrokeShape>
-                <Label Text="0" FontSize="60" MaxLines="1" HorizontalTextAlignment="End"
+                <Label Text="0" FontSize="50" MaxLines="1" HorizontalTextAlignment="End"
                        Padding="20, 10" x:Name="resLabel"/>
             </Border>
+
+            <!-- Кнопка назад -->
+            <Border Grid.Row="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15"/>
+                </Border.StrokeShape>
+                <Button Text="Switch Mode" Clicked="OnBackClicked"/>
+            </Border>
+
 
             <!-- Клавиатура калькулятора -->
             <Grid Margin="20" Grid.Row="2">

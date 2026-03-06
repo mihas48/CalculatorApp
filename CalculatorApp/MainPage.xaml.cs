@@ -49,9 +49,17 @@ namespace CalculatorApp
 
             Button currentBtn = (Button)sender;
 
-            if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
-                resLabel.Text = "";
-            resLabel.Text += currentBtn.Text;
+            if (operation != Operation.none)
+            {
+                OnBtnEqualsClicked(sender, e);
+            }
+
+            else
+            {
+                if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
+                    resLabel.Text = "";
+                resLabel.Text += currentBtn.Text;
+            }
         }
 
         private void OnBtnDelClicked(object sender, System.EventArgs e)
@@ -142,25 +150,23 @@ namespace CalculatorApp
 
         private void OnBtnEqualsClicked(object sender, System.EventArgs e)
         {
-            double operand;
-            double.TryParse(resLabel.Text, out operand);
+            double operand = leftOperand;
+            if (leftOperand == 0)
+                double.TryParse(resLabel.Text, out operand);
 
             switch (operation)
             {
                 case Operation.addition:
                     resLabel.Text = (leftOperand + operand).ToString();
                     double.TryParse(resLabel.Text, out leftOperand);
-                    operation = Operation.none;
                     break;
                 case Operation.subtrarion:
                     resLabel.Text = (leftOperand - operand).ToString();
                     double.TryParse(resLabel.Text, out leftOperand);
-                    operation = Operation.none;
                     break;
                 case Operation.multiplication:
                     resLabel.Text = (leftOperand * operand).ToString();
                     double.TryParse(resLabel.Text, out leftOperand);
-                    operation = Operation.none;
                     break;
                 case Operation.division:
                     if (operand == 0)
@@ -171,12 +177,12 @@ namespace CalculatorApp
                     {
                         resLabel.Text = (leftOperand / operand).ToString();
                         double.TryParse(resLabel.Text, out leftOperand);
-                        operation = Operation.none;
                     }
                     break;
                 case Operation.none:
                     break;
             }
+            operation = Operation.none;
         }
 
         private void OnBtnPercentageClicked(object sender, System.EventArgs e)

@@ -28,13 +28,18 @@ public partial class EngineeringCalculator : ContentPage
 
     Operation operation = Operation.none;
 
-    double leftOperand = double.MinValue;
+    double leftOperand = 0;
 
     private void OnBtnNumClicked(object sender, System.EventArgs e)
     {
         double num;
 
         Button currentBtn = (Button)sender;
+
+        if (operation != Operation.none)
+        {
+            OnBtnEqualsClicked(sender, e);
+        }
 
         if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
             resLabel.Text = "";
@@ -159,17 +164,14 @@ public partial class EngineeringCalculator : ContentPage
             case Operation.addition:
                 resLabel.Text = (leftOperand + operand).ToString();
                 double.TryParse(resLabel.Text, out leftOperand);
-                operation = Operation.none;
                 break;
             case Operation.subtrarion:
                 resLabel.Text = (leftOperand - operand).ToString();
                 double.TryParse(resLabel.Text, out leftOperand);
-                operation = Operation.none;
                 break;
             case Operation.multiplication:
                 resLabel.Text = (leftOperand * operand).ToString();
                 double.TryParse(resLabel.Text, out leftOperand);
-                operation = Operation.none;
                 break;
             case Operation.division:
                 if (operand == 0)
@@ -180,17 +182,16 @@ public partial class EngineeringCalculator : ContentPage
                 {
                     resLabel.Text = (leftOperand / operand).ToString();
                     double.TryParse(resLabel.Text, out leftOperand);
-                    operation = Operation.none;
                 }
                 break;
             case Operation.power:
                 resLabel.Text = Math.Pow(leftOperand, operand).ToString();
                 double.TryParse(resLabel.Text, out leftOperand);
-                operation = Operation.none;
                 break;
             case Operation.none:
                 break;
         }
+        operation = Operation.none;
     }
 
     private void OnBtnPercentageClicked(object sender, System.EventArgs e)

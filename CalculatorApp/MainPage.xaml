@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CalculatorApp.MainPage">
+
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -11,23 +12,24 @@
             </Grid.RowDefinitions>
 
             
-            <!-- Кнопка переключения режима -->
-            <Border Grid.Row="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="15"/>
-                </Border.StrokeShape>
-                <Button Text="Engineering" Clicked="ToEngineeringCalculator"/>
-            </Border>
+
 
             <!-- Дисплей результата -->
-            <Border Stroke="Gray" Margin="20" Grid.Row="1">
+            <Border Stroke="Gray" Margin="20" Grid.Row="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="25"/>
                 </Border.StrokeShape>
-                <Label Text="0" FontSize="60" MaxLines ="1" HorizontalTextAlignment="End"
+                <Label Text="0" FontSize="50" MaxLines ="1" HorizontalTextAlignment="End"
                         Padding="20, 10" x:Name="resLabel"/>
             </Border>
 
+            <!-- Кнопка переключения режима -->
+            <Border Grid.Row="1">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15"/>
+                </Border.StrokeShape>
+                <Button Text="Switch Mode" Clicked="ToEngineeringCalculator"/>
+            </Border>
 
             <Grid Margin="20" Grid.Row="2">
                 <Grid.ColumnDefinitions>
