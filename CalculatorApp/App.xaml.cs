@@ -15,8 +15,8 @@ namespace CalculatorApp
             {
                 Width = 500,
                 Height = 700,
-                MinimumHeight = 550,
-                MinimumWidth = 330
+                MinimumHeight = 680,
+                MinimumWidth = 380
             };
         }
     }

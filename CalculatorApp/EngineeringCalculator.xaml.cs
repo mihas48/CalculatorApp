@@ -38,7 +38,17 @@ public partial class EngineeringCalculator : ContentPage
 
         if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
             resLabel.Text = "";
-        resLabel.Text += currentBtn.Text;
+
+        if (subResLabel.Text.Contains('='))
+            resLabel.Text = currentBtn.Text;
+        else
+            resLabel.Text += currentBtn.Text;
+
+        // строка с последним действием
+        if (subResLabel.Text.Contains('='))
+            subResLabel.Text = currentBtn.Text;
+        else
+            subResLabel.Text += currentBtn.Text;
     }
 
     private void OnBtnDelClicked(object sender, System.EventArgs e)
@@ -56,6 +66,8 @@ public partial class EngineeringCalculator : ContentPage
     private void OnBtnClearEntryClicked(object sender, System.EventArgs e)
     {
         resLabel.Text = "0";
+        subResLabel.Text = string.Empty;
+        operation = Operation.none;
     }
 
     private void OnBtnClearClicked(object sender, System.EventArgs e)
@@ -76,7 +88,17 @@ public partial class EngineeringCalculator : ContentPage
 
     private void OnBtnComplexOperationClicked(object sender, System.EventArgs e)
     {
+        // случай, когда операция уже выбрана, а пользователь нажимает другую операцию,
+        // тогда выполняется предыдущая операция и выбирается новая, так же если пользователь нажимает на операцию после равно,
+        // то выполняется предыдущая операция и выбирается новая
+        bool operationAlreadyChosen = operation != Operation.none;
+
         Button currentBtn = (Button)sender;
+
+        if (operation != Operation.none)
+        {
+            OnBtnEqualsClicked(sender, e);
+        }
 
         operation = currentBtn.Text switch
         {
@@ -88,10 +110,24 @@ public partial class EngineeringCalculator : ContentPage
             _ => Operation.none
         };
 
+        // Запоминает значение поля ввода, если оно не пустое
         if (resLabel.Text != "0" && resLabel.Text != "0,")
             double.TryParse(resLabel.Text, out leftOperand);
 
-        OnBtnClearEntryClicked(sender, e);
+        // строка с последним действием
+        if (!subResLabel.Text.Contains('+') && !subResLabel.Text.Contains('-') && !subResLabel.Text.Contains('×') &&
+            !subResLabel.Text.Contains('÷') && !subResLabel.Text.Contains('^'))
+        {
+            subResLabel.Text += currentBtn.Text;
+        }
+        else if (!subResLabel.Text.Contains('=')) // проверка, чтобы не было уже равно, иначе будет замена знака в строке с последним действием
+        {
+            subResLabel.Text = subResLabel.Text.Substring(0, subResLabel.Text.Length - 1);
+            subResLabel.Text += currentBtn.Text;
+        }
+
+        if (!operationAlreadyChosen)
+            resLabel.Text = "0";
     }
 
     private void OnBtnSimpleOperationClicked(object sender, System.EventArgs e)
@@ -191,6 +227,9 @@ public partial class EngineeringCalculator : ContentPage
             case Operation.none:
                 break;
         }
+
+        if (!subResLabel.Text.Contains('='))
+            subResLabel.Text += '=';
     }
 
     private void OnBtnPercentageClicked(object sender, System.EventArgs e)
@@ -270,13 +309,13 @@ public partial class EngineeringCalculator : ContentPage
                 if (operand <= 0)
                     resLabel.Text = "Ошибка! Невозможно найти логарифм от этого числа!";
                 else
-                    resLabel.Text = Math.Log(operand).ToString();  
+                    resLabel.Text = Math.Log(operand).ToString();
                 break;
             case "log":
                 if (operand <= 0)
                     resLabel.Text = "Ошибка! Невозможно найти логарифм от этого числа!";
                 else
-                    resLabel.Text = Math.Log10(operand).ToString();  
+                    resLabel.Text = Math.Log10(operand).ToString();
                 break;
         }
     }
