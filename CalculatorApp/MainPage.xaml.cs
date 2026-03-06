@@ -41,7 +41,7 @@ namespace CalculatorApp
         }
 
 
-        //===== Обработка нажатия кнопок =====
+        //Обработка нажатия кнопок
 
         private void OnBtnNumClicked(object sender, System.EventArgs e)
         {
@@ -49,17 +49,22 @@ namespace CalculatorApp
 
             Button currentBtn = (Button)sender;
 
-            if (operation != Operation.none)
-            {
-                OnBtnEqualsClicked(sender, e);
-            }
+            //проверка на ноль и запятую, чтобы не было лишних нулей в начале и не было возможности ввести несколько запятых
+            if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
+                resLabel.Text = "";
 
+            if (subResLabel.Text.Contains('='))
+                resLabel.Text = currentBtn.Text;
             else
-            {
-                if (resLabel.Text == "0" || !double.TryParse(resLabel.Text, out num))
-                    resLabel.Text = "";
                 resLabel.Text += currentBtn.Text;
-            }
+
+
+            //строка с последним действием
+            if (subResLabel.Text.Contains('='))
+                subResLabel.Text = currentBtn.Text;
+            else
+                subResLabel.Text += currentBtn.Text;
+            
         }
 
         private void OnBtnDelClicked(object sender, System.EventArgs e)
@@ -77,6 +82,8 @@ namespace CalculatorApp
         private void OnBtnClearEntryClicked(object sender, System.EventArgs e)
         {
             resLabel.Text = "0";
+            subResLabel.Text = string.Empty;
+            operation = Operation.none;
         }
 
         private void OnBtnClearClicked(object sender, System.EventArgs e)
@@ -97,7 +104,17 @@ namespace CalculatorApp
 
         private void OnBtnComplexOperationClicked(object sender, System.EventArgs e)
         {
+            //случай, когда операция уже выбрана, а пользователь нажимает другую операцию,
+            //тогда выполняется предыдущая операция и выбирается новая, так же если пользователь нажимает на операцию после равно,
+            //то выполняется предыдущая операция и выбирается новая
+            bool operationAlreadyChosen = operation != Operation.none;
+
             Button currentBtn = (Button)sender;
+
+            if (operation != Operation.none)
+            {
+                OnBtnEqualsClicked(sender, e);
+            }
 
             operation = currentBtn.Text switch
             {
@@ -112,7 +129,20 @@ namespace CalculatorApp
             if (resLabel.Text != "0" && resLabel.Text != "0,")
                 double.TryParse(resLabel.Text, out leftOperand);
 
-            OnBtnClearEntryClicked(sender, e);
+            //строка с последним действием
+            if (!subResLabel.Text.Contains('+') && !subResLabel.Text.Contains('-') && !subResLabel.Text.Contains('×') &&
+                !subResLabel.Text.Contains('÷'))
+            {
+            subResLabel.Text += currentBtn.Text;
+            }
+            else if (!subResLabel.Text.Contains('=')) //проверка, чтобы не было уже равно, иначе будет замена знака в строке с последним действием
+            {
+                subResLabel.Text = subResLabel.Text.Substring(0, subResLabel.Text.Length - 1);
+                subResLabel.Text += currentBtn.Text;
+            }
+
+            if (!operationAlreadyChosen)
+                resLabel.Text = "0";
         }
 
         private void OnBtnSimpleOperationClicked(object sender, System.EventArgs e)
@@ -182,7 +212,6 @@ namespace CalculatorApp
                 case Operation.none:
                     break;
             }
-            operation = Operation.none;
         }
 
         private void OnBtnPercentageClicked(object sender, System.EventArgs e)

@@ -11,27 +11,44 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Дисплей результата и последней операции-->
+            <Grid Grid.Row="0" Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" TextColor="LightGrey" FontSize="20" HorizontalTextAlignment="End"
+                       Text="" Padding="30, 0" Opacity="0.7" x:Name="subResLabel"/>
+
+                <Border Stroke="Gray" Margin="20" Grid.Row="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="25"/>
+                    </Border.StrokeShape>
+                    <Label Text="0" FontSize="60" MaxLines ="1" HorizontalTextAlignment="End"
+                       Padding="20, 10" x:Name="resLabel"/>
+                </Border>
+            </Grid>
 
 
-            <!-- Дисплей результата -->
-            <Border Stroke="Gray" Margin="20" Grid.Row="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="25"/>
-                </Border.StrokeShape>
-                <Label Text="0" FontSize="50" MaxLines ="1" HorizontalTextAlignment="End"
-                        Padding="20, 10" x:Name="resLabel"/>
-            </Border>
 
             <!-- Кнопка переключения режима -->
-            <Border Grid.Row="1">
+            <Border Grid.Row="1" Margin="20, 0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
                 <Button Text="Switch Mode" Clicked="ToEngineeringCalculator"/>
             </Border>
 
-            <Grid Margin="20" Grid.Row="2">
+            
+            <!-- Клавиатура калькулятора -->
+            <Grid Margin="20" Grid.Row="2" Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
